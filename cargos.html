@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cargos - SmarTarget</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f7fafc;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 260px;
+      background-color: #1e293b;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 20px;
+      position: fixed;
+      height: 100vh;
+    }
+    .sidebar img {
+      width: 180px;
+      margin: 0 auto 40px;
+    }
+    .sidebar a {
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+      display: flex;
+      align-items: center;
+    }
+    .sidebar a:hover {
+      background-color: #334155;
+    }
+    .sidebar a.active {
+      background-color: #2563eb;
+      color: white;
+    }
+    .main {
+      margin-left: 260px;
+      flex-grow: 1;
+      padding: 40px 50px;
+      overflow-y: auto;
+      height: 100vh;
+    }
+    h1 {
+      color: #111827;
+      margin-bottom: 30px;
+    }
+    form {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-size: 16px;
+    }
+    button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2563eb;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+      overflow: hidden;
+    }
+    th, td {
+      padding: 16px 20px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    th {
+      background-color: #f1f5f9;
+      font-weight: 600;
+      color: #475569;
+    }
+    .actions button {
+      background-color: #64748b;
+      margin-right: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .actions button:hover {
+      background-color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <img src="logo.jpg" alt="SmartTarget Logo" />
+    <a href="home.html">🏠 Início</a>
+    <a href="usuarios.html">👤 Usuários</a>
+    <a href="empresas.html">🏢 Empresas</a>
+    <a href="departamentos.html">📂 Departamentos</a>
+    <a href="cargos.html" class="active">💼 Cargos</a>
+    <a href="okrs.html">🎯 OKRs</a>
+    <a href="kpis.html">📊 KPIs</a>
+    <a href="vinculos.html">🔗 Vínculos</a>
+    <a href="dashboard.html">📈 Relatórios</a>
+  </div>
+  <div class="main">
+    <h1>Cargos</h1>
+    <form id="cargoForm">
+      <input type="hidden" id="editIndex" />
+      <input type="text" id="nome" placeholder="Nome do cargo" required />
+      <select id="departamento" required>
+        <option value="" disabled selected>Selecione o departamento</option>
+      </select>
+      <button type="submit">Salvar</button>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Departamento</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="cargoTable"></tbody>
+    </table>
+  </div>
+  <script>
+    const form = document.getElementById('cargoForm');
+    const cargoTable = document.getElementById('cargoTable');
+    const
