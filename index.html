@@ -1,0 +1,95 @@
+INDEX.HTML
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login - SmarTarget</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .login-container {
+    background: white;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    width: 360px;
+    text-align: center;
+  }
+  h2 {
+    margin-bottom: 24px;
+    color: #1e293b;
+  }
+  select, input[type="password"], button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 16px;
+  }
+  button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #2563eb;
+  }
+</style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Entrar no SmarTarget</h2>
+    <select id="userType" required>
+      <option value="" disabled selected>Selecione o tipo de usuário</option>
+      <option value="admin">Admin</option>
+      <option value="gestor">Gestor</option>
+      <option value="colaborador">Colaborador</option>
+    </select>
+    <input type="password" id="password" placeholder="Senha" required />
+    <button id="loginBtn">Entrar</button>
+  </div>
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const userType = document.getElementById('userType').value;
+      const password = document.getElementById('password').value.trim();
+      if (!userType) {
+        alert('Por favor, selecione o tipo de usuário.');
+        return;
+      }
+      if (!password) {
+        alert('Por favor, informe a senha.');
+        return;
+      }
+      // Senhas simples para teste
+      const validPasswords = {
+        admin: 'admin123',
+        gestor: 'gestor123',
+        colaborador: 'colab123'
+      };
+      if (password !== validPasswords[userType]) {
+        alert('Senha incorreta para o tipo de usuário selecionado.');
+        return;
+      }
+      // Salvar tipo de usuário no localStorage e criar flag de login
+      localStorage.setItem('smarUserType', userType);
+      localStorage.setItem('smarLoggedIn', 'true');
+      // Redirecionar para home.html
+      window.location.href = 'home.html';
+    });
+  </script>
+</body>
+</html>
