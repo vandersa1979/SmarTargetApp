@@ -1,20 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Empresas e Filiais - SmarTarget</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {font-family: 'Segoe UI', Arial, sans-serif; background: #f7fbff; margin: 0;}
-        .container {max-width: 800px; margin: 40px auto; background: #fff; border-radius: 18px; box-shadow: 0 2px 12px #0c4a6e22; padding: 36px;}
-        h1 {color: #185fa3; margin-bottom: 16px;}
-        h2 {margin-top: 32px;}
-        label {font-weight: 500;}
-        input, select, button {
-            font-size: 1rem; padding: 8px; border-radius: 8px; border: 1px solid #b5d1e2; margin-bottom: 14px; margin-top: 2px;
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style> body { font-family: 'Inter', sans-serif; } .sidebar { scrollbar-width: none; } </style>
+</head>
+<body class="bg-slate-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-slate-800 text-white flex flex-col p-4 fixed h-full overflow-y-auto sidebar">
+            <div class="text-center py-4 mb-5"><h1 class="text-2xl font-bold">SmarTarget</h1></div>
+            <nav class="flex-grow">
+                <a href="./home.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🏠 Início</span></a>
+                <h2 class="text-xs font-semibold text-slate-400 uppercase mt-6 mb-2 px-4">Cadastros</h2>
+                <a href="./usuarios.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>👤 Usuários</span></a>
+                <a href="./equipes.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>👥 Equipes</span></a>
+                <a href="./empresas.html" class="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-700"><span>🏢 Empresas e Filiais</span></a>
+                <a href="./departamentos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>📂 Departamentos</span></a>
+                <a href="./cargos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>💼 Cargos</span></a>
+                <a href="./periodos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🗓️ Períodos de Avaliação</span></a>
+                <h2 class="text-xs font-semibold text-slate-400 uppercase mt-6 mb-2 px-4">Gestão de Metas</h2>
+                <a href="./okrs.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🎯 OKRs</span></a>
+                <a href="./kpis.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>📊 KPIs</span></a>
+                <a href="./associacoes.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🔗 Associações</span></a>
+                <h2 class="text-xs font-semibold text-slate-400 uppercase mt-6 mb-2 px-4">Análise</h2>
+                <a href="./mapa-estrategico.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🗺️ Mapa Estratégico</span></a>
+                <a href="./dashboard.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>📈 Dashboard</span></a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-64 p-8 overflow-y-auto">
+            <h1 class="text-3xl font-bold text-slate-800 mb-6">Cadastro de Empresas e Filiais</h1>
+
+            <!-- Form -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8 max-w-2xl">
+                <form id="empresaForm" class="space-y-4">
+                    <input type="hidden" id="editIndex" />
+                    <div>
+                        <label for="nome" class="block text-sm font-medium text-slate-600">Nome da Empresa/Filial</label>
+                        <input type="text" id="nome" placeholder="Ex: Smart Solutions Ltda" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required />
+                    </div>
+                    <div>
+                        <label for="cnpj" class="block text-sm font-medium text-slate-600">CNPJ</label>
+                        <input type="text" id="cnpj" placeholder="00.000.000/0001-00" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required />
+                    </div>
+                    <div>
+                        <label for="matriz" class="block text-sm font-medium text-slate-600">Filial de (Matriz)</label>
+                        <select id="matriz" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"></select>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Salvar Empresa</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white p-6 rounded-xl shadow-md overflow-x-auto">
+                <table class="w-full text-sm text-left text-slate-500">
+                    <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Nome</th>
+                            <th scope="col" class="px-6 py-3">CNPJ</th>
+                            <th scope="col" class="px-6 py-3">Matriz</th>
+                            <th scope="col" class="px-6 py-3 text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="empresaTable"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const form = document.getElementById('empresaForm');
+        const empresaTable = document.getElementById('empresaTable').getElementsByTagName('tbody')[0];
+        const matrizSelect = document.getElementById('matriz');
+        let empresas = JSON.parse(localStorage.getItem('empresas')) || [];
+
+        function loadMatrizOptions() {
+            matrizSelect.innerHTML = '<option value="">Nenhuma (É uma Matriz)</option>';
+            empresas.forEach(empresa => {
+                matrizSelect.innerHTML += `<option value="${empresa.nome}">${empresa.nome}</option>`;
+            });
         }
-        button {background: #2563eb; color: #fff; border: none; cursor: pointer; font-weight: bold;}
-        button:hover {background: #1e40af;}
-        .empresa-list {margin-top: 24px;}
-        .empresa-card {
-            background: #e3f0fc; border-radius: 12px; padding: 20px;
+
+        function renderTable() {
+            empresaTable.innerHTML = '';
+            empresas.forEach((empresa, index) => {
+                const row = empresaTable.insertRow();
+                row.className = 'bg-white border-b hover:bg-slate-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">${empresa.nome}</td>
+                    <td class="px-6 py-4">${empresa.cnpj}</td>
+                    <td class="px-6 py-4">${empresa.matriz || 'N/A'}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="editEmpresa(${index})" class="font-medium text-blue-600 hover:underline mr-3">Editar</button>
+                        <button onclick="deleteEmpresa(${index})" class="font-medium text-red-600 hover:underline">Excluir</button>
+                    </td>
+                `;
+            });
+            loadMatrizOptions();
+        }
+
+        function editEmpresa(index) {
+            const empresa = empresas[index];
+            document.getElementById('nome').value = empresa.nome;
+            document.getElementById('cnpj').value = empresa.cnpj;
+            matrizSelect.value = empresa.matriz;
+            document.getElementById('editIndex').value = index;
+            window.scrollTo(0, 0);
+        }
+
+        function deleteEmpresa(index) {
+            if (confirm('Tem certeza que deseja excluir esta empresa?')) {
+                empresas.splice(index, 1);
+                localStorage.setItem('empresas', JSON.stringify(empresas));
+                renderTable();
+            }
+        }
+
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const cnpj = document.getElementById('cnpj').value;
+            const matriz = matrizSelect.value;
+            const editIndex = document.getElementById('editIndex').value;
+            const empresa = { nome, cnpj, matriz };
+
+            if (editIndex === '') {
+                empresas.push(empresa);
+            } else {
+                empresas[editIndex] = empresa;
+                document.getElementById('editIndex').value = '';
+            }
+
+            localStorage.setItem('empresas', JSON.stringify(empresas));
+            form.reset();
+            renderTable();
+        };
+
+        // Initial Load
+        renderTable();
+    </script>
+</body>
+</html>
