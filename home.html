@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard - SmarTarget</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+        }
+        .sidebar img {
+            width: 180px;
+            margin: 0 auto 40px;
+        }
+        .sidebar a {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar a:hover {
+            background-color: #334155;
+        }
+        .sidebar a.active {
+            background-color: #2563eb;
+            color: white;
+        }
+        .main {
+            margin-left: 260px;
+            flex-grow: 1;
+            padding: 40px 50px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+        h1 {
+            color: #111827;
+            margin-bottom: 30px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
+        }
+        .card h2 {
+            margin: 0 0 10px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .card p {
+            margin: 0;
+            color: #475569;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="logo.jpg" alt="SmartTarget Logo" />
+        <a href="home.html" class="active">🏠 Início</a>
+        <a href="usuarios.html">👤 Usuários</a>
+        <a href="empresas.html">🏢 Empresas</a>
+        <a href="departamentos.html">📂 Departamentos</a>
+        <a href="cargos.html">💼 Cargos</a>
+        <a href="okrs.html">🎯 OKRs</a>
+        <a href="kpis.html">📊 KPIs</a>
+        <a href="vinculos.html">🔗 Vínculos</a>
+        <a href="dashboard.html">📈 Relatórios</a>
+    </div>
+    <div class="main">
+        <h1>Bem-vindo ao SmarTarget</h1>
+        <div class="cards">
+            <div class="card" onclick="location.href='okrs.html'">
+                <h2>OKRs</h2>
+                <p>Gerencie os objetivos estratégicos da empresa.</p>
+            </div>
+            <div class="card" onclick="location.href='kpis.html'">
+                <h2>KPIs</h2>
+                <p>Acompanhe os indicadores de desempenho.</p>
+            </div>
+            <div class="card" onclick="location.href='usuarios.html'">
+                <h2>Usuários</h2>
+                <p>Controle os usuários e permissões.</p>
+            </div>
+            <div class="card" onclick="location.href='dashboard.html'">
+                <h2>Relatórios</h2>
+                <p>Visualize os resultados em gráficos.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
