@@ -1,63 +1,153 @@
-vinculos.html
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vínculos - SmarTarget</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f7fafc;
-      display: flex;
-      height: 100vh;
+  <title>Vínculos OKR x KPI - SmarTarget</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style> body { font-family: 'Inter', sans-serif; } 
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+</style>
+</head>
+<body class="bg-slate-100">
+<div class="p-4"><img src="logo.jpg" alt="SmartTarget Logo" class="h-12"></div>
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-800 text-white p-6 fixed h-full overflow-y-auto">
+      <h1 class="text-2xl font-bold mb-8 text-center">SmarTarget</h1>
+      <nav class="space-y-2">
+        <a href="home.html" class="block px-4 py-2 rounded hover:bg-slate-700">🏠 Início</a>
+        <h2 class="mt-4 px-4 text-xs text-slate-400 uppercase">Cadastros</h2>
+        <a href="usuarios.html" class="block px-4 py-2 rounded hover:bg-slate-700">👤 Usuários</a>
+        <a href="equipes.html" class="block px-4 py-2 rounded hover:bg-slate-700">👥 Equipes</a>
+        <a href="empresas.html" class="block px-4 py-2 rounded hover:bg-slate-700">🏢 Empresas</a>
+        <a href="departamentos.html" class="block px-4 py-2 rounded hover:bg-slate-700">📂 Departamentos</a>
+        <a href="cargos.html" class="block px-4 py-2 rounded hover:bg-slate-700">💼 Cargos</a>
+        <a href="periodos.html" class="block px-4 py-2 rounded hover:bg-slate-700">🗓️ Períodos</a>
+        <h2 class="mt-4 px-4 text-xs text-slate-400 uppercase">Gestão de Metas</h2>
+        <a href="okrs.html" class="block px-4 py-2 rounded hover:bg-slate-700">🎯 OKRs</a>
+        <a href="kpis.html" class="block px-4 py-2 rounded hover:bg-slate-700">📊 KPIs</a>
+        <a href="vinculos.html" class="block px-4 py-2 rounded bg-slate-700">🔗 Vínculos</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-64 p-8 overflow-y-auto">
+      <h1 class="text-3xl font-bold text-slate-800 mb-6">Vínculos OKR x KPI</h1>
+
+      <!-- Form -->
+      <div class="bg-white p-6 rounded-xl shadow mb-8 max-w-lg">
+        <form id="vinculosForm" class="space-y-4">
+          <input type="hidden" id="editIndex" value="" />
+          <div>
+            <label for="okr" class="block text-sm font-medium text-slate-600">Objetivo (OKR)</label>
+            <select id="okr" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+              <option value="" disabled selected>Selecione o OKR</option>
+            </select>
+          </div>
+          <div>
+            <label for="kpi" class="block text-sm font-medium text-slate-600">Indicador (KPI)</label>
+            <select id="kpi" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+              <option value="" disabled selected>Selecione o KPI</option>
+            </select>
+          </div>
+          <div class="text-right">
+            <button type="submit" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition">Salvar Vínculo</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white p-6 rounded-xl shadow overflow-x-auto">
+        <table class="w-full text-sm text-left text-slate-500">
+          <thead class="text-xs uppercase bg-slate-100 text-slate-700">
+            <tr>
+              <th class="px-6 py-3">OKR</th>
+              <th class="px-6 py-3">KPI</th>
+              <th class="px-6 py-3 text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="vinculosTable"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const okrSelect = document.getElementById('okr');
+    const kpiSelect = document.getElementById('kpi');
+    const tableBody = document.getElementById('vinculosTable');
+    const form = document.getElementById('vinculosForm');
+    let vinculos = JSON.parse(localStorage.getItem('vinculos')) || [];
+    const okrs = JSON.parse(localStorage.getItem('okrs')) || [];
+    const kpis = JSON.parse(localStorage.getItem('kpis')) || [];
+
+    function loadSelects() {
+      okrs.forEach(o => {
+        okrSelect.innerHTML += `<option value="${o.nome}">${o.nome}</option>`;
+      });
+      kpis.forEach(k => {
+        kpiSelect.innerHTML += `<option value="${k.nome}">${k.nome}</option>`;
+      });
     }
-    .sidebar {
-      width: 260px;
-      background-color: #1e293b;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      padding: 30px 20px;
-      position: fixed;
-      height: 100vh;
+
+    function renderTable() {
+      tableBody.innerHTML = '';
+      vinculos.forEach((v, i) => {
+        const row = tableBody.insertRow();
+        row.className = 'bg-white border-b hover:bg-slate-50';
+        row.innerHTML = `
+          <td class="px-6 py-4 font-medium text-slate-900">${v.okr}</td>
+          <td class="px-6 py-4">${v.kpi}</td>
+          <td class="px-6 py-4 text-center">
+            <button onclick="editVinculo(${i})" class="text-blue-600 hover:underline mr-3">Editar</button>
+            <button onclick="deleteVinculo(${i})" class="text-red-600 hover:underline">Excluir</button>
+          </td>
+        `;
+      });
     }
-    .sidebar img {
-      width: 180px;
-      margin: 0 auto 40px;
+
+    function editVinculo(index) {
+      const v = vinculos[index];
+      okrSelect.value = v.okr;
+      kpiSelect.value = v.kpi;
+      document.getElementById('editIndex').value = index;
+      window.scrollTo(0, 0);
     }
-    .sidebar a {
-      color: #cbd5e1;
-      text-decoration: none;
-      padding: 12px 16px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      font-weight: 600;
-      transition: background-color 0.2s ease;
-      display: flex;
-      align-items: center;
+
+    function deleteVinculo(index) {
+      if (confirm('Excluir este vínculo?')) {
+        vinculos.splice(index, 1);
+        localStorage.setItem('vinculos', JSON.stringify(vinculos));
+        renderTable();
+      }
     }
-    .sidebar a:hover {
-      background-color: #334155;
-    }
-    .sidebar a.active {
-      background-color: #2563eb;
-      color: white;
-    }
-    .main {
-      margin-left: 260px;
-      flex-grow: 1;
-      padding: 40px 50px;
-      overflow-y: auto;
-      height: 100vh;
-    }
-    h1 {
-      color: #111827;
-      margin-bottom: 30px;
-    }
-    form {
-      background: white;
-      padding
+
+    form.onsubmit = e => {
+      e.preventDefault();
+      const okr = okrSelect.value;
+      const kpi = kpiSelect.value;
+      const editIndex = document.getElementById('editIndex').value;
+      const v = { okr, kpi };
+      if (editIndex === '') {
+        vinculos.push(v);
+      } else {
+        vinculos[editIndex] = v;
+        document.getElementById('editIndex').value = '';
+      }
+      localStorage.setItem('vinculos', JSON.stringify(vinculos));
+      form.reset();
+      renderTable();
+    };
+
+    loadSelects();
+    renderTable();
+  </script>
+</body>
+</html>
