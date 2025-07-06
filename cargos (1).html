@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Períodos de Avaliação - SmarTarget</title>
+    <title>Cargos - SmarTarget</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style> body { font-family: 'Inter', sans-serif; } .sidebar { scrollbar-width: none; } </style>
@@ -40,13 +40,12 @@ const db = firebase.firestore();
                 <a href="./equipes.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>👥 Equipes</span></a>
                 <a href="./empresas.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🏢 Empresas e Filiais</span></a>
                 <a href="./departamentos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>📂 Departamentos</span></a>
-                <a href="./cargos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>💼 Cargos</span></a>
-                <a href="./periodos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-700"><span>🗓️ Períodos de Avaliação</span></a>
+                <a href="./cargos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-700"><span>💼 Cargos</span></a>
+                <a href="./periodos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🗓️ Períodos de Avaliação</span></a>
                 <h2 class="text-xs font-semibold text-slate-400 uppercase mt-6 mb-2 px-4">Gestão de Metas</h2>
                 <a href="./okrs.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🎯 OKRs</span></a>
                 <a href="./kpis.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>📊 KPIs</span></a>
                 <a href="./associacoes.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🔗 Associações</span></a>
-                <a href="./vinculos.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🔗 Vínculos OKR-KPI</span></a>
                 <h2 class="text-xs font-semibold text-slate-400 uppercase mt-6 mb-2 px-4">Análise</h2>
                 <a href="./mapa-estrategico.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>🗺️ Mapa Estratégico</span></a>
                 <a href="./dashboard.html" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-slate-700"><span>📈 Dashboard</span></a>
@@ -55,28 +54,22 @@ const db = firebase.firestore();
 
         <!-- Main Content -->
         <main class="flex-1 ml-64 p-8 overflow-y-auto">
-            <h1 class="text-3xl font-bold text-slate-800 mb-6">Cadastro de Períodos de Avaliação</h1>
+            <h1 class="text-3xl font-bold text-slate-800 mb-6">Cadastro de Cargos</h1>
 
             <!-- Form -->
             <div class="bg-white p-6 rounded-xl shadow-md mb-8 max-w-2xl">
-                <form id="periodoForm" class="space-y-4">
+                <form id="cargoForm" class="space-y-4">
                     <input type="hidden" id="editIndex" />
                     <div>
-                        <label for="nome" class="block text-sm font-medium text-slate-600">Nome do Período</label>
-                        <input type="text" id="nome" placeholder="Ex: 1º Trimestre 2025" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required />
+                        <label for="nome" class="block text-sm font-medium text-slate-600">Nome do Cargo</label>
+                        <input type="text" id="nome" placeholder="Ex: Analista Financeiro" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required />
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="dataInicio" class="block text-sm font-medium text-slate-600">Data de Início</label>
-                            <input type="date" id="dataInicio" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required />
-                        </div>
-                        <div>
-                            <label for="dataFim" class="block text-sm font-medium text-slate-600">Data de Fim</label>
-                            <input type="date" id="dataFim" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required />
-                        </div>
+                    <div>
+                        <label for="departamento" class="block text-sm font-medium text-slate-600">Departamento</label>
+                        <select id="departamento" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required></select>
                     </div>
                     <div class="text-right">
-                        <button type="submit" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Salvar Período</button>
+                        <button type="submit" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Salvar Cargo</button>
                     </div>
                 </form>
             </div>
@@ -86,53 +79,59 @@ const db = firebase.firestore();
                 <table class="w-full text-sm text-left text-slate-500">
                     <thead class="text-xs text-slate-700 uppercase bg-slate-100">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Nome do Período</th>
-                            <th scope="col" class="px-6 py-3">Início</th>
-                            <th scope="col" class="px-6 py-3">Fim</th>
+                            <th scope="col" class="px-6 py-3">Nome do Cargo</th>
+                            <th scope="col" class="px-6 py-3">Departamento</th>
                             <th scope="col" class="px-6 py-3 text-center">Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="periodoTable"></tbody>
+                    <tbody id="cargoTable"></tbody>
                 </table>
             </div>
         </main>
     </div>
 
     <script>
-        const form = document.getElementById('periodoForm');
-        const periodoTable = document.getElementById('periodoTable');
-        let periodos = JSON.parse(localStorage.getItem('periodos')) || [];
+        const form = document.getElementById('cargoForm');
+        const cargoTable = document.getElementById('cargoTable').getElementsByTagName('tbody')[0];
+        const departamentoSelect = document.getElementById('departamento');
+        let cargos = JSON.parse(localStorage.getItem('cargos')) || [];
+        let departamentos = JSON.parse(localStorage.getItem('departamentos')) || [];
+
+        function loadDepartamentos() {
+            departamentoSelect.innerHTML = '<option value="" disabled selected>Selecione o departamento</option>';
+            departamentos.forEach(dep => {
+                departamentoSelect.innerHTML += `<option value="${dep.nome}">${dep.nome}</option>`;
+            });
+        }
 
         function renderTable() {
-            periodoTable.innerHTML = '';
-            periodos.forEach((periodo, index) => {
-                const row = periodoTable.insertRow();
+            cargoTable.innerHTML = '';
+            cargos.forEach((cargo, index) => {
+                const row = cargoTable.insertRow();
                 row.className = 'bg-white border-b hover:bg-slate-50';
                 row.innerHTML = `
-                    <td class="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">${periodo.nome}</td>
-                    <td class="px-6 py-4">${new Date(periodo.dataInicio + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
-                    <td class="px-6 py-4">${new Date(periodo.dataFim + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
+                    <td class="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">${cargo.nome}</td>
+                    <td class="px-6 py-4">${cargo.departamento}</td>
                     <td class="px-6 py-4 text-center">
-                        <button onclick="editPeriodo(${index})" class="font-medium text-blue-600 hover:underline mr-3">Editar</button>
-                        <button onclick="deletePeriodo(${index})" class="font-medium text-red-600 hover:underline">Excluir</button>
+                        <button onclick="editCargo(${index})" class="font-medium text-blue-600 hover:underline mr-3">Editar</button>
+                        <button onclick="deleteCargo(${index})" class="font-medium text-red-600 hover:underline">Excluir</button>
                     </td>
                 `;
             });
         }
 
-        function editPeriodo(index) {
-            const periodo = periodos[index];
-            document.getElementById('nome').value = periodo.nome;
-            document.getElementById('dataInicio').value = periodo.dataInicio;
-            document.getElementById('dataFim').value = periodo.dataFim;
+        function editCargo(index) {
+            const cargo = cargos[index];
+            document.getElementById('nome').value = cargo.nome;
+            departamentoSelect.value = cargo.departamento;
             document.getElementById('editIndex').value = index;
             window.scrollTo(0, 0);
         }
 
-        function deletePeriodo(index) {
-            if (confirm('Tem certeza que deseja excluir este período?')) {
-                periodos.splice(index, 1);
-                localStorage.setItem('periodos', JSON.stringify(periodos));
+        function deleteCargo(index) {
+            if (confirm('Tem certeza que deseja excluir este cargo?')) {
+                cargos.splice(index, 1);
+                localStorage.setItem('cargos', JSON.stringify(cargos));
                 renderTable();
             }
         }
@@ -140,24 +139,27 @@ const db = firebase.firestore();
         form.onsubmit = (e) => {
             e.preventDefault();
             const nome = document.getElementById('nome').value;
-            const dataInicio = document.getElementById('dataInicio').value;
-            const dataFim = document.getElementById('dataFim').value;
+            const departamento = departamentoSelect.value;
             const editIndex = document.getElementById('editIndex').value;
-            const periodo = { nome, dataInicio, dataFim };
+            const cargo = { nome, departamento };
 
             if (editIndex === '') {
-                periodos.push(periodo);
+                cargos.push(cargo);
             } else {
-                periodos[editIndex] = periodo;
+                cargos[editIndex] = cargo;
                 document.getElementById('editIndex').value = '';
             }
 
-            localStorage.setItem('periodos', JSON.stringify(periodos));
+            localStorage.setItem('cargos', JSON.stringify(cargos));
             form.reset();
             renderTable();
         };
 
+        loadDepartamentos();
         renderTable();
     </script>
 </body>
 </html>
+</body>
+</html>
+
